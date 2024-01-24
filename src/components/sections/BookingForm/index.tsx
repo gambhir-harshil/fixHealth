@@ -4,15 +4,15 @@ import { Input } from "@/components/ui/input";
 import Spinner from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import DoctorsDrawer from "./doctorsDrawer";
 
-interface NameFormData {
+interface NameFormData extends FieldValues {
   contact: number;
   name: string;
 }
 
-interface AgeFormData {
+interface AgeFormData extends FieldValues {
   age: number;
   city: string;
   company: string;
@@ -30,6 +30,9 @@ export default function BookingForm() {
   const [age, setAge] = useState<number>(0);
   const [nameValue, setNameValue] = useState<string>("");
   const [doctor, setDoctor] = useState<string>("");
+
+  const { handleSubmit: handleSubmitNameForm } = useForm<NameFormData>();
+  const { handleSubmit: handleSubmitAgeForm } = useForm<AgeFormData>();
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -56,12 +59,12 @@ export default function BookingForm() {
     reset,
   } = useForm();
 
-  function onSubmitFirst(data: NameFormData) {
+  const onSubmitFirst: SubmitHandler<NameFormData> = (data) => {
     reset();
     const { name } = data;
     setNameValue(name);
     handleTogglePage("cityAge");
-  }
+  };
 
   function onSubmitSecond(data: AgeFormData) {
     reset();
@@ -124,7 +127,7 @@ export default function BookingForm() {
             <>
               <h2 className="text-2xl font-semibold">Fill in your details</h2>
               <form
-                onSubmit={handleSubmit(onSubmitFirst)}
+                onSubmit={handleSubmitNameForm(onSubmitFirst)}
                 action="submit"
                 className="flex flex-col gap-4"
               >
@@ -182,7 +185,7 @@ export default function BookingForm() {
                 Help us understand you better
               </h2>
               <form
-                onSubmit={handleSubmit(onSubmitSecond)}
+                onSubmit={handleSubmitAgeForm(onSubmitSecond)}
                 action="submit"
                 className="flex flex-col gap-4"
               >
