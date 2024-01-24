@@ -7,7 +7,7 @@ const Navbar = () => {
         <img
           src="https://ik.imagekit.io/tcfp7i31d/logo_with_yp_black_urUeyjKwY.svg"
           alt="logo"
-          className="h-full w-full"
+          className="w-full h-full"
         />
       </div>
       <ModeToggle />

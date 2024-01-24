@@ -8,11 +8,14 @@ import { useForm } from "react-hook-form";
 import DoctorsDrawer from "./doctorsDrawer";
 
 export default function BookingForm() {
+  const queryParameters = new URLSearchParams(window.location.search);
+  const cityParam = queryParameters.get("city");
+  const initialCityValue = cityParam ? cityParam : "";
   const [showIndicator, setShowIndicator] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<
     "name" | "cityAge" | "complaints" | "prevExp" | "doctors" | "booked"
   >("name");
-  const [cityValue, setCityValue] = useState<string>("");
+  const [cityValue, setCityValue] = useState<string>(initialCityValue);
   const [age, setAge] = useState<number>(0);
   const [nameValue, setNameValue] = useState<string>("");
   const [doctor, setDoctor] = useState<string>("");

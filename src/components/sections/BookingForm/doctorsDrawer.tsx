@@ -17,6 +17,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import ErrorPage from "../ErrorPage";
+import Spinner from "@/components/ui/spinner";
 
 interface DoctorsDrawerProps {
   cityValue: string;
@@ -51,17 +53,23 @@ const DoctorsDrawer = ({ cityValue, handleBook }: DoctorsDrawerProps) => {
             We have found the best doctors based on your preferences.
           </DrawerDescription>
         </DrawerHeader>
-        <Carousel opts={{ align: "center" }} className="px-6 py-4">
-          <CarouselContent className="gap-4 ml-16">
-            {filteredDoctors?.map((doctor: Doctor) => (
-              <CarouselItem key={doctor.id} className="basis-1/3">
-                <DoctorCard doctor={doctor} handleBook={handleBook} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
+        {error ? (
+          <ErrorPage />
+        ) : loading ? (
+          <Spinner size="large" />
+        ) : (
+          <Carousel opts={{ align: "center" }} className="px-6 py-4">
+            <CarouselContent className="gap-4 ml-16">
+              {filteredDoctors?.map((doctor: Doctor) => (
+                <CarouselItem key={doctor.id} className="basis-1/3">
+                  <DoctorCard doctor={doctor} handleBook={handleBook} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        )}
       </DrawerContent>
     </Drawer>
   );

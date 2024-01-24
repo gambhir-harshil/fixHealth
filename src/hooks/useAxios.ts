@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-axios.defaults.baseURL = "http://localhost:8000";
+axios.defaults.baseURL = "https://fixhealth-server.onrender.com";
 
 interface useAxiosProps {
   method: "get" | "post" | "put" | "delete";
