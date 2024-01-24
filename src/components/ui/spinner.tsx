@@ -8,7 +8,7 @@ const Spinner = ({ size }: SpinnerProps) => {
     <div
       className={cn(
         "border-2 rounded-full border-t-foreground animate-spin",
-        size === "large" ? "w-20 h-20 : "w-12 h-12"
+        size === "large" ? "w-20 h-20" : "w-12 h-12"
       )}
     />
   );
