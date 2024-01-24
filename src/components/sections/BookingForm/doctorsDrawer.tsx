@@ -22,7 +22,7 @@ import Spinner from "@/components/ui/spinner";
 
 interface DoctorsDrawerProps {
   cityValue: string;
-  handleBook: () => void;
+  handleBook: (doctor: string) => void;
 }
 
 const DoctorsDrawer = ({ cityValue, handleBook }: DoctorsDrawerProps) => {

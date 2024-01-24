@@ -5,7 +5,7 @@ import { Doctor } from "@/types";
 
 interface DoctorCardProps {
   doctor: Doctor;
-  handleBook: () => void;
+  handleBook: (doctor: string) => void;
 }
 const DoctorCard = ({ doctor, handleBook }: DoctorCardProps) => {
   return (

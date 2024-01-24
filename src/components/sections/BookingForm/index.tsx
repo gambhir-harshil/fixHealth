@@ -7,6 +7,17 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import DoctorsDrawer from "./doctorsDrawer";
 
+interface NameFormData {
+  contact: number;
+  name: string;
+}
+
+interface AgeFormData {
+  age: number;
+  city: string;
+  company: string;
+}
+
 export default function BookingForm() {
   const queryParameters = new URLSearchParams(window.location.search);
   const cityParam = queryParameters.get("city");
@@ -45,27 +56,27 @@ export default function BookingForm() {
     reset,
   } = useForm();
 
-  function onSubmitFirst(data) {
+  function onSubmitFirst(data: NameFormData) {
     reset();
     const { name } = data;
     setNameValue(name);
     handleTogglePage("cityAge");
   }
 
-  function onSubmitSecond(data) {
+  function onSubmitSecond(data: AgeFormData) {
     reset();
     const { age } = data;
     setAge(age);
     handleTogglePage("complaints");
   }
 
-  function onSubmitThird(data) {
+  function onSubmitThird() {
     reset();
     if (age >= 40) handleTogglePage("prevExp");
     else handleTogglePage("doctors");
   }
 
-  function onSubmitFourth(data) {
+  function onSubmitFourth() {
     reset();
     handleTogglePage("doctors");
   }
@@ -108,7 +119,7 @@ export default function BookingForm() {
           </div>
         </div>
         <div className="flex flex-col items-center justify-center flex-1 gap-4 px-6 pt-20 pb-24 sm:pb-32 lg:px-8 lg:py-48">
-          {showIndicator && <Spinner />}
+          {showIndicator && <Spinner size="small" />}
           {currentPage === "name" && !showIndicator && (
             <>
               <h2 className="text-2xl font-semibold">Fill in your details</h2>
