@@ -1,3 +1,5 @@
+import { FieldValues } from "react-hook-form";
+
 export interface Testimonial {
   id: number;
   name: string;

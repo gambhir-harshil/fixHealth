@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { CitySelector } from "@/components/ui/citySelector";
 import { Input } from "@/components/ui/input";
-import Spinner from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import DoctorsDrawer from "./doctorsDrawer";
 import { AgeFormData, NameFormData } from "@/types";
