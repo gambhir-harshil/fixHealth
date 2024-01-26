@@ -13,3 +13,14 @@ export interface Doctor {
   expertise: string;
   image: string;
 }
+
+export interface NameFormData extends FieldValues {
+  contact: number;
+  name: string;
+}
+
+export interface AgeFormData extends FieldValues {
+  age: number;
+  city: string;
+  company: string;
+}

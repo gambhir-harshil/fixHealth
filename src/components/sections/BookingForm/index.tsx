@@ -4,25 +4,15 @@ import { Input } from "@/components/ui/input";
 import Spinner from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import DoctorsDrawer from "./doctorsDrawer";
-
-interface NameFormData extends FieldValues {
-  contact: number;
-  name: string;
-}
-
-interface AgeFormData extends FieldValues {
-  age: number;
-  city: string;
-  company: string;
-}
+import { AgeFormData, NameFormData } from "@/types";
 
 export default function BookingForm() {
   const queryParameters = new URLSearchParams(window.location.search);
   const cityParam = queryParameters.get("city");
   const initialCityValue = cityParam ? cityParam : "";
-  const [showIndicator, setShowIndicator] = useState<boolean>(true);
+  // const [showIndicator, setShowIndicator] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<
     "name" | "cityAge" | "complaints" | "prevExp" | "doctors" | "booked"
   >("name");
@@ -31,25 +21,21 @@ export default function BookingForm() {
   const [nameValue, setNameValue] = useState<string>("");
   const [doctor, setDoctor] = useState<string>("");
 
-  const { handleSubmit: handleSubmitNameForm } = useForm<NameFormData>();
-  const { handleSubmit: handleSubmitAgeForm } = useForm<AgeFormData>();
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setShowIndicator(false);
-    }, 1000);
-
-    return () => clearTimeout(timeoutId);
-  }, []);
+  const {
+    handleSubmit: handleSubmitNameForm,
+    register: regsiterNameForm,
+    formState: { errors: nameFormErrors },
+  } = useForm<NameFormData>();
+  const {
+    handleSubmit: handleSubmitAgeForm,
+    register: regsiterAgeForm,
+    formState: { errors: ageFormErrors },
+  } = useForm<AgeFormData>();
 
   const handleTogglePage = (
     page: "name" | "cityAge" | "complaints" | "prevExp" | "doctors" | "booked"
   ) => {
-    setShowIndicator(true);
-    setTimeout(() => {
-      setShowIndicator(false);
-      setCurrentPage(page);
-    }, 2000);
+    setCurrentPage(page);
   };
 
   const {
@@ -122,8 +108,7 @@ export default function BookingForm() {
           </div>
         </div>
         <div className="flex flex-col items-center justify-center flex-1 gap-4 px-6 pt-20 pb-24 sm:pb-32 lg:px-8 lg:py-48">
-          {showIndicator && <Spinner size="small" />}
-          {currentPage === "name" && !showIndicator && (
+          {currentPage === "name" && (
             <>
               <h2 className="text-2xl font-semibold">Fill in your details</h2>
               <form
@@ -137,7 +122,7 @@ export default function BookingForm() {
                     id="name"
                     placeholder="Name"
                     className="w-[320px] h-[48px] text-lg bg-secondary"
-                    {...register("name", {
+                    {...regsiterNameForm("name", {
                       required: {
                         value: true,
                         message: "Name is required",
@@ -145,7 +130,7 @@ export default function BookingForm() {
                     })}
                   />
                   <span className="mt-6 text-xs text-red-500">
-                    {errors.name?.message as string}
+                    {nameFormErrors.name?.message as string}
                   </span>
                 </div>
                 <div>
@@ -158,7 +143,7 @@ export default function BookingForm() {
                       MozAppearance: "textfield",
                     }}
                     className="text-lg bg-secondary w-[320px] h-[48px]"
-                    {...register("contact", {
+                    {...regsiterNameForm("contact", {
                       required: {
                         value: true,
                         message: "Contact is required",
@@ -170,7 +155,7 @@ export default function BookingForm() {
                     })}
                   />
                   <span className="mt-6 text-xs text-red-500">
-                    {errors.contact?.message as string}
+                    {nameFormErrors.contact?.message as string}
                   </span>
                 </div>
                 <Button type="submit" className="text-lg font-semibold">
@@ -179,7 +164,7 @@ export default function BookingForm() {
               </form>
             </>
           )}
-          {currentPage === "cityAge" && !showIndicator && (
+          {currentPage === "cityAge" && (
             <>
               <h2 className="text-2xl font-semibold">
                 Help us understand you better
@@ -199,7 +184,7 @@ export default function BookingForm() {
                       WebkitAppearance: "none",
                       MozAppearance: "textfield",
                     }}
-                    {...register("age", {
+                    {...regsiterAgeForm("age", {
                       required: {
                         value: true,
                         message: "Age is required",
@@ -207,17 +192,17 @@ export default function BookingForm() {
                     })}
                   />
                   <span className="mt-6 text-xs text-red-500">
-                    {errors.age?.message as string}
+                    {ageFormErrors.age?.message as string}
                   </span>
                 </div>
                 <div className="flex flex-col gap-0">
                   <CitySelector
                     value={cityValue}
                     setValue={setCityValue}
-                    register={register}
+                    register={regsiterAgeForm}
                   />
                   <span className="mt-6 text-xs text-red-500">
-                    {errors.city?.message as string}
+                    {ageFormErrors.city?.message as string}
                   </span>
                 </div>
                 <div>
@@ -226,7 +211,7 @@ export default function BookingForm() {
                     id="company"
                     placeholder="Company"
                     className="w-[320px] h-[48px] text-lg bg-secondary"
-                    {...register("company", {
+                    {...regsiterAgeForm("company", {
                       required: {
                         value: true,
                         message: "Company is required",
@@ -234,7 +219,7 @@ export default function BookingForm() {
                     })}
                   />
                   <span className="mt-6 text-xs text-red-500">
-                    {errors.company?.message as string}
+                    {ageFormErrors.company?.message as string}
                   </span>
                 </div>
                 <Button type="submit" className="text-lg font-semibold">
@@ -243,7 +228,7 @@ export default function BookingForm() {
               </form>
             </>
           )}
-          {currentPage === "complaints" && !showIndicator && (
+          {currentPage === "complaints" && (
             <>
               <h2 className="text-2xl font-semibold">
                 Fill in your chief complaints
@@ -276,7 +261,7 @@ export default function BookingForm() {
               </form>
             </>
           )}
-          {currentPage === "prevExp" && !showIndicator && (
+          {currentPage === "prevExp" && (
             <>
               <h2 className="text-2xl font-semibold">
                 Tell us about your previous experience
@@ -309,10 +294,10 @@ export default function BookingForm() {
               </form>
             </>
           )}
-          {currentPage === "doctors" && !showIndicator && (
+          {currentPage === "doctors" && (
             <DoctorsDrawer cityValue={cityValue} handleBook={onBook} />
           )}
-          {currentPage === "booked" && !showIndicator && (
+          {currentPage === "booked" && (
             <div className="px-8">
               <h1 className="text-3xl font-semibold">
                 Congratulations {nameValue} your appointment is booked with{" "}

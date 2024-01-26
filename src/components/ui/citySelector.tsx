@@ -18,6 +18,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { FieldValues, UseFormRegister } from "react-hook-form";
+import { AgeFormData } from "@/types";
 
 const cities = [
   {
@@ -65,7 +66,7 @@ const cities = [
 interface CitySelectorProps {
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<AgeFormData>;
 }
 
 export function CitySelector({ value, setValue, register }: CitySelectorProps) {

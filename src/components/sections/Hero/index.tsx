@@ -25,7 +25,7 @@ const Hero = () => {
   }
   return (
     <div className="flex h-screen mb-20">
-      <div className="basis-[40%] overflow-hidden">
+      <div className="basis-[40%] overflow-hidden hidden lg:block">
         <img
           src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="hero"
@@ -33,7 +33,7 @@ const Hero = () => {
         />
       </div>
       <div className="basis-[60%] flex flex-col justify-center px-24 gap-4 relative">
-        <div className="flex mb-4 text-5xl font-bold ">
+        <div className="flex mb-4 text-2xl font-bold lg:text-5xl ">
           <span className="border border-[#00ACC1] text-[#00ACC1] px-3 py-2">
             Fix
           </span>{" "}
